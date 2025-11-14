@@ -1,4 +1,4 @@
-# GitHub API Spring BSoot
+# GitHub API Spring Boot
 
 A Spring Boot microservice that integrates with the GitHub API.  
 Built with Java 25, and runs on the default Spring Boot port (`8080`).
