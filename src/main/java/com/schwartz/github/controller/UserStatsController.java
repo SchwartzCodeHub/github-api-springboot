@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/api/users/{userId}") // Base path with a path variable
+@RequestMapping("/api/users/{userId}")
 public class UserStatsController {
 
     private UserService userService;
@@ -33,8 +33,8 @@ public class UserStatsController {
     @GetMapping("/stats")
     public ResponseEntity<?> getUserStats(@PathVariable("userId") String userId) {
         if (StringUtils.hasText(userId)) {
-            User userData = this.userService.getUserData(userId);
-            Repository[] repositories = this.repositoryService.getAllRepositoryForUser(userId);
+            User userData = this.userService.getUserData(userId).getBody();
+            Repository[] repositories = this.repositoryService.getAllRepositoryForUser(userId).getBody();
             UserStats userStats = UserStatsMapper.map(userData, repositories);
             return ResponseEntity.ok(userStats);
         } else {

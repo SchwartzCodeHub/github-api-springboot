@@ -1,8 +1,10 @@
 package com.schwartz.github.service.impl;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.schwartz.github.model.Repository;
@@ -18,13 +20,19 @@ public class GithubRepositoryServiceImpl implements RepositoryService {
     }
 
     @Cacheable("repository")
-    public Repository[] getAllRepositoryForUser(String userId) {
+    public ResponseEntity<Repository[]> getAllRepositoryForUser(String userId) {
         String uri = "https://api.github.com/users/{userId}/repos";
         ResponseEntity<Repository[]> response = restTemplate.getForEntity(uri, Repository[].class, userId);
         if (response != null) {
-            return response.getBody();
+            return response;
         } else {
-            throw new RuntimeException();// TODO - create exception and exception handler
+            throw new RestClientResponseException(
+                    "No content found for repository for user" + userId,
+                    HttpStatus.NO_CONTENT.value(),
+                    HttpStatus.NO_CONTENT.getReasonPhrase(),
+                    null,
+                    new byte[0],
+                    null);
         }
     }
 }

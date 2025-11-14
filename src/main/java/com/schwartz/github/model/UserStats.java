@@ -16,6 +16,6 @@ public class UserStats {
     String email;
     String url;
     @JsonProperty("created_at")
-    String createdAt;// "Tue, 25 Jan 2011 18:44:36 GMT"
+    String createdAt;
     Repository[] repos;
 }

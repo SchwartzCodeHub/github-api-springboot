@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.schwartz.github.model.User;
@@ -20,13 +21,8 @@ public class GithubUserServiceImpl implements UserService {
     }
 
     @Cacheable("user")
-    public User getUserData(String userId) {
+    public ResponseEntity<User> getUserData(String userId) {
         String uri = "https://api.github.com/users/{userId}";
-        ResponseEntity<User> response = restTemplate.getForEntity(uri, User.class, userId);
-        if (response != null) {
-            return response.getBody();
-        } else {
-            throw new RuntimeException();// TODO - create exception and exception handler
-        }
+        return restTemplate.getForEntity(uri, User.class, userId);
     }
 }
