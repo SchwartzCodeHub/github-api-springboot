@@ -4,6 +4,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.springframework.util.StringUtils;
+
 import com.schwartz.github.model.Repository;
 import com.schwartz.github.model.User;
 import com.schwartz.github.model.UserStats;
@@ -23,9 +26,12 @@ public class UserStatsMapper {
     }
 
     static String convertIsoDateToRFC(String iso8601String) {
-        Instant instant = Instant.parse(iso8601String);
-        ZonedDateTime zdt = instant.atZone(ZoneId.of("GMT"));
-        DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
-        return formatter.format(zdt);
+        if (StringUtils.hasText(iso8601String)) {
+            Instant instant = Instant.parse(iso8601String);
+            ZonedDateTime zdt = instant.atZone(ZoneId.of("GMT"));
+            DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
+            return formatter.format(zdt);
+        }
+        return iso8601String;
     }
 }

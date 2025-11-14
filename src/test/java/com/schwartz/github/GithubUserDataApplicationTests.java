@@ -8,6 +8,7 @@ class GithubUserDataApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// If the application context fails to start, this test will fail.
 	}
 
 }

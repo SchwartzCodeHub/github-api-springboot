@@ -9,9 +9,6 @@ import com.schwartz.github.model.UserStats;
 import com.schwartz.github.service.RepositoryService;
 import com.schwartz.github.service.UserService;
 
-import java.util.Arrays;
-
-import org.apache.catalina.util.StringUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
